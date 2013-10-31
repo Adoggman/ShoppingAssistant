@@ -48,6 +48,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/login"
         android:textColor="@android:color/white"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:onClick="login" />
 
 </RelativeLayout>

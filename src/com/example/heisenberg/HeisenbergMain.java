@@ -1,6 +1,7 @@
 package com.example.heisenberg;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -26,6 +27,11 @@ public class HeisenbergMain extends Activity {
     public void readQRCode(View v){
 		IntentIntegrator integrator = new IntentIntegrator(this);
 		integrator.initiateScan();
+    }
+    
+    public void login(View v){
+    	Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+    	startActivity(i);
     }
     
 }
