@@ -7,6 +7,25 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".HeisenbergMain" >
+    
+    <!--  Header  Starts-->
+        <LinearLayout android:id="@+id/header"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@layout/header_gradient"
+                android:paddingTop="5dip"
+                android:paddingBottom="5dip">
+                <!-- Logo Start-->
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dip"
+                    android:src="@drawable/logo_50" />
+
+                <!-- Logo Ends -->
+        </LinearLayout>
+        <!--  Header Ends -->
 
     <Button
         android:id="@+id/btnSearch"
@@ -14,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="90dp"
         android:text="@string/search"
         android:textColor="@android:color/white"
         android:textSize="30sp" />

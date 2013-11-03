@@ -34,13 +34,13 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f08000c;
-        public static final int btnBrowse=0x7f080001;
-        public static final int btnLogin=0x7f080003;
+        public static final int btnBrowse=0x7f080002;
+        public static final int btnLogin=0x7f080004;
         public static final int btnRegister=0x7f08000a;
-        public static final int btnScan=0x7f080002;
-        public static final int btnSearch=0x7f080000;
+        public static final int btnScan=0x7f080003;
+        public static final int btnSearch=0x7f080001;
         public static final int footer=0x7f080005;
-        public static final int header=0x7f080004;
+        public static final int header=0x7f080000;
         public static final int link_to_login=0x7f08000b;
         public static final int link_to_register=0x7f080006;
         public static final int reg_email=0x7f080008;
