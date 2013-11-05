@@ -35,7 +35,7 @@ public final class R {
         public static final int midnight_repeat=0x7f02000b;
     }
     public static final class id {
-        public static final int action_settings=0x7f080016;
+        public static final int action_settings=0x7f080017;
         public static final int btnBrowse=0x7f080002;
         public static final int btnLogin=0x7f080004;
         public static final int btnRegister=0x7f080011;
@@ -44,13 +44,14 @@ public final class R {
         public static final int button1=0x7f080007;
         public static final int footer=0x7f08000c;
         public static final int header=0x7f080000;
+        public static final int id=0x7f080015;
         public static final int itemCost=0x7f08000b;
         public static final int itemDescription=0x7f08000a;
-        public static final int itemId=0x7f080015;
         public static final int itemName=0x7f080008;
         public static final int link_to_login=0x7f080012;
         public static final int link_to_register=0x7f08000d;
         public static final int list=0x7f080014;
+        public static final int name=0x7f080016;
         public static final int reg_email=0x7f08000f;
         public static final int reg_fullname=0x7f08000e;
         public static final int reg_password=0x7f080010;

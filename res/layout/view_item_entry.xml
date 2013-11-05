@@ -4,13 +4,13 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
       <TextView
-        android:id="@+id/itemId"
+        android:id="@+id/id"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:visibility="gone" />
   
        <TextView
-           android:id="@+id/itemName"
+           android:id="@+id/name"
            android:layout_width="fill_parent"
            android:layout_height="wrap_content"
            android:layout_marginBottom="5dp"

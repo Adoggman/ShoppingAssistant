@@ -14,7 +14,7 @@ public class HeisenbergMain extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heisenberg_main);
-        initDatabase();
+        //initDatabase();
     }
 
     @Override
