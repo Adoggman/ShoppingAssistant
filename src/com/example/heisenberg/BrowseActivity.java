@@ -33,7 +33,7 @@ public class BrowseActivity extends ListActivity {
     ArrayList<HashMap<String, String>> itemsList;
  
     // url to get all products list
-    private static String url_all_products = "http://10.0.2.2/android_connect/get_all_items.php";
+    private static String url_all_products = "http://192.168.0.24/android_connect/get_all_items.php";
  
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -66,16 +66,14 @@ public class BrowseActivity extends ListActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {
                 // getting values from selected ListItem
-                String pid = ((TextView) view.findViewById(R.id.id)).getText()
-                        .toString();
+                String itemId = ((TextView) view.findViewById(R.id.id)).getText().toString();
  
-                // Starting new intent
-//                Intent in = new Intent(getApplicationContext(), EditProductActivity.class);
-//                // sending pid to next activity
-//                in.putExtra(TAG_PID, pid);
-// 
-//                // starting new activity and expecting some response back
-//                startActivityForResult(in, 100);
+                Intent in = new Intent(getApplicationContext(), DetailsActivity.class);
+                // sending pid to next activity
+                in.putExtra(TAG_ID, itemId);
+ 
+                // starting new activity and expecting some response back
+                startActivity(in);
             }
         });
  
