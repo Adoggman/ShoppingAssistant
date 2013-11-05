@@ -31,9 +31,9 @@ public class BrowseActivity extends ListActivity {
 				  public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
 					  itemId = (TextView) view.findViewById(R.id.itemId);
 					  String valItemId = itemId.getText().toString();					  
-					  Intent  objIndent = new Intent(getApplicationContext(), DetailsActivity.class);
-					  objIndent.putExtra("itemId", valItemId); 
-					  startActivity(objIndent); 
+					  Intent  i = new Intent(getApplicationContext(), DetailsActivity.class);
+					  i.putExtra("itemId", valItemId); 
+					  startActivity(i); 
 				  }
 			}); 
         }

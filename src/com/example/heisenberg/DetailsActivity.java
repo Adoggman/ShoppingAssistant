@@ -1,13 +1,10 @@
 package com.example.heisenberg;
 
-import java.util.HashMap;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class DetailsActivity extends Activity {
@@ -23,10 +20,11 @@ public class DetailsActivity extends Activity {
         itemCost = (TextView)findViewById(R.id.itemCost);
         Intent objIntent = getIntent();
         String itemId = objIntent.getStringExtra("itemId");
+        Item item = controller.getItem(itemId);
         Log.d("Reading", "Reading all items...");
-    	itemName.setText("Item: " + controller.getItemName(itemId));
-    	itemDescription.setText("Description: " + controller.getItemDescription(itemId));
-    	itemCost.setText("Cost: " + controller.getItemCost(itemId));
+    	itemName.setText("Item: " + item.getName());
+    	itemDescription.setText("Description: " + item.getDescription());
+    	itemCost.setText("Cost: " + item.getCost());
         
     }
 	

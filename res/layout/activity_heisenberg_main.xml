@@ -12,7 +12,6 @@
         <LinearLayout android:id="@+id/header"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@layout/header_gradient"
                 android:paddingTop="5dip"
                 android:paddingBottom="5dip">
                 <!-- Logo Start-->
@@ -21,7 +20,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dip"
-                    android:src="@drawable/logo_50" />
+                    android:src="@drawable/logo_main_50" />
 
                 <!-- Logo Ends -->
         </LinearLayout>

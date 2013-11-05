@@ -1,9 +1,5 @@
 package com.example.heisenberg;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,16 +24,19 @@ public class HeisenbergMain extends Activity {
         return true;
     }
     
+    // start the QR code scanner
     public void readQRCode(View v){
 		IntentIntegrator integrator = new IntentIntegrator(this);
 		integrator.initiateScan();
     }
     
+    // navigate to login
     public void login(View v){
     	Intent i = new Intent(getApplicationContext(), LoginActivity.class);
     	startActivity(i);
     }
     
+    // navigate to browse
     public void browse(View v){
     	Intent i = new Intent(getApplicationContext(), BrowseActivity.class);
     	startActivity(i);

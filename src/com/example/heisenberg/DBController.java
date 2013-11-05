@@ -93,49 +93,15 @@ public class DBController  extends SQLiteOpenHelper {
     return wordList;
   }
   
-  public String getItemName(String id){
+  public Item getItem(String id){
 	  openDB();
-	  String name = "";
-	  Cursor cursor = database.rawQuery("SELECT itemName FROM items where itemId = '" + id + "'", null);
+	  Item i = null;
+	  Cursor cursor = database.rawQuery("SELECT * FROM items where itemId = '" + id + "'", null);
 	  if (cursor.moveToFirst()){
-		  name = cursor.getString(0);
+		  // Columns: 1 - name, 2 - description, 3 - cost
+		  i = new Item(cursor.getString(1), cursor.getString(2), Double.parseDouble(cursor.getString(3)));
 	  }
 	  closeDB();
-	  return name;
+	  return i;
   }
-  
-  public String getItemDescription(String id){
-	  openDB();
-	  String description = "";
-	  Cursor cursor = database.rawQuery("SELECT itemDescription FROM items where itemId = '" + id + "'", null);
-	  if (cursor.moveToFirst()){
-		  description = cursor.getString(0);
-	  }
-	  closeDB();
-	  return description;
-  }
-  
-  public String getItemCost(String id){
-	  openDB();
-	  String cost = "";
-	  Cursor cursor = database.rawQuery("SELECT itemCost FROM items where itemId = '" + id + "'", null);
-	  if (cursor.moveToFirst()){
-		  cost = cursor.getString(0);
-	  }
-	  closeDB();
-	  return cost;
-  }
- 
-  public HashMap<String, String> getItemInfo(String id) {
-    HashMap<String, String> wordList = new HashMap<String, String>();
-    SQLiteDatabase database = this.getReadableDatabase();
-    String selectQuery = "SELECT * FROM items where itemId='"+id+"'";
-    Cursor cursor = database.rawQuery(selectQuery, null);
-    if (cursor.moveToFirst()) {
-      do {
-        wordList.put("itemName", cursor.getString(1));
-      } while (cursor.moveToNext());
-    }           
-    return wordList;
-  } 
 }
