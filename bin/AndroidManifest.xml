@@ -30,6 +30,14 @@
             android:name="com.example.heisenberg.RegisterActivity"
             android:windowSoftInputMode="stateHidden">
         </activity>
+        <activity 
+            android:name="com.example.heisenberg.BrowseActivity"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity 
+            android:name="com.example.heisenberg.DetailsActivity"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
     </application>
 
 </manifest>

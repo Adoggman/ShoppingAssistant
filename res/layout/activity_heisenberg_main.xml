@@ -46,7 +46,8 @@
         android:layout_centerHorizontal="true"
         android:text="@string/browse"
         android:textColor="@android:color/white"
-        android:textSize="30sp" />
+        android:textSize="30sp" 
+        android:onClick="browse" />
 
     <Button
         android:id="@+id/btnScan"

@@ -1,5 +1,9 @@
 package com.example.heisenberg;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +18,7 @@ public class HeisenbergMain extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heisenberg_main);
+        initDatabase();
     }
 
     @Override
@@ -31,6 +36,19 @@ public class HeisenbergMain extends Activity {
     public void login(View v){
     	Intent i = new Intent(getApplicationContext(), LoginActivity.class);
     	startActivity(i);
+    }
+    
+    public void browse(View v){
+    	Intent i = new Intent(getApplicationContext(), BrowseActivity.class);
+    	startActivity(i);
+    }
+    
+    private void initDatabase(){
+    	DBController db = new DBController(this);
+    	db.resetTable();
+    	db.insertItem("Microsoft Surface Pro 2", "Tablet", 400.00);
+    	db.insertItem("Radeon HD 7950", "Graphics Card", 300.00);
+    	db.insertItem("HP Laptop", "Computer", 400.00);
     }
     
 }
