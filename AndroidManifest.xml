@@ -15,6 +15,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.heisenberg.HeisenbergMain"
+            android:screenOrientation = "portrait"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,20 +25,30 @@
         </activity>
         <activity 
             android:name="com.example.heisenberg.LoginActivity"
+            android:screenOrientation = "portrait"
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity 
             android:name="com.example.heisenberg.RegisterActivity"
+            android:screenOrientation = "portrait"
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity 
             android:name="com.example.heisenberg.BrowseActivity"
+            android:screenOrientation = "portrait"
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity 
             android:name="com.example.heisenberg.DetailsActivity"
+            android:screenOrientation = "portrait"
             android:windowSoftInputMode="stateHidden">
         </activity>
     </application>
-
+    
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>    
+	<uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
 </manifest>
