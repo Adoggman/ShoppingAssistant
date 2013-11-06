@@ -27,7 +27,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:background="#454545"
-            android:onClick="showAddForm"
+            android:onClick="addItem"
             android:text="+"
             android:textColor="#FFFFFF"
             android:textSize="30sp" />

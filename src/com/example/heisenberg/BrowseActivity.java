@@ -33,7 +33,8 @@ public class BrowseActivity extends ListActivity {
     ArrayList<HashMap<String, String>> itemsList;
  
     // url to get all products list
-    private static String url_all_products = "http://192.168.0.24/android_connect/get_all_items.php";
+    private static String url_all_products = Constants.url+"get_all_items.php";
+    
  
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -48,7 +49,6 @@ public class BrowseActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.browse);
- 
         // Hashmap for ListView
         itemsList = new ArrayList<HashMap<String, String>>();
  
@@ -93,6 +93,11 @@ public class BrowseActivity extends ListActivity {
             startActivity(intent);
         }
  
+    }
+    
+    public void addItem(View v){
+    	Intent i = new Intent(getApplicationContext(), NewItemActivity.class);
+    	startActivity(i);
     }
  
     /**
