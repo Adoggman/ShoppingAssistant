@@ -91,8 +91,7 @@ public class NewItemActivity extends Activity {
  
             // getting JSON Object
             // Note that create product url accepts POST method
-            JSONObject json = jsonParser.makeHttpRequest(url_create_product,
-                    "POST", params);
+            JSONObject json = jsonParser.makeHttpRequest(url_create_product,"POST", params);
  
             // check log cat fro response
             Log.d("Create Response", json.toString());

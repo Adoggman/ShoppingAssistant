@@ -68,12 +68,12 @@ public class BrowseActivity extends ListActivity {
                 // getting values from selected ListItem
                 String itemId = ((TextView) view.findViewById(R.id.id)).getText().toString();
  
-                Intent in = new Intent(getApplicationContext(), DetailsActivity.class);
+                Intent in = new Intent(getApplicationContext(), EditItemActivity.class);
                 // sending pid to next activity
                 in.putExtra(TAG_ID, itemId);
  
-                // starting new activity and expecting some response back
-                startActivity(in);
+             // starting new activity and expecting some response back
+                startActivityForResult(in, 100);
             }
         });
  
