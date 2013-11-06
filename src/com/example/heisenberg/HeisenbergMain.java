@@ -7,9 +7,12 @@ import android.view.Menu;
 import android.view.View;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 public class HeisenbergMain extends Activity {
 
+    private static final String TAG_ID = "id";
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +31,21 @@ public class HeisenbergMain extends Activity {
 		IntentIntegrator integrator = new IntentIntegrator(this);
 		integrator.initiateScan();
     }
+    
+    // go to item details on scan
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+		if (scanResult != null) {
+            String itemId = scanResult.getContents();
+            
+            Intent in = new Intent(getApplicationContext(), DetailsActivity.class);
+            // sending pid to next activity
+            in.putExtra(TAG_ID, itemId);
+
+         // starting new activity and expecting some response back
+            startActivityForResult(in, 100);
+		}
+	}
     
     // navigate to login
     public void login(View v){
