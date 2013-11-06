@@ -20,29 +20,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-//public class DetailsActivity extends Activity {
-//	TextView itemName, itemDescription, itemCost;
-//	DBController controller = new DBController(this);
-//	// url to get all products list
-//    private String url_get_item = "http://192.168.0.24/android_connect/get_item_details.php?id=";
-//    
-//	@Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.details);
-//        itemName = (TextView)findViewById(R.id.itemName);
-//        itemDescription = (TextView)findViewById(R.id.itemDescription);
-//        itemCost = (TextView)findViewById(R.id.itemCost);
-//        Intent objIntent = getIntent();
-//        String itemId = objIntent.getStringExtra("id");
-//        Item item = controller.getItem(itemId);
-//        Log.d("Reading", "Reading all items...");
-//    	itemName.setText("Item: " + item.getName());
-//    	itemDescription.setText("Description: " + item.getDescription());
-//    	itemCost.setText("Cost: " + item.getCost());
-//        
-//    }
-//}
 public class DetailsActivity extends Activity {
 	 
     TextView txtName;
@@ -58,13 +35,7 @@ public class DetailsActivity extends Activity {
     JSONParser jsonParser = new JSONParser();
  
     // single product url
-    private static final String url_product_details = "http://192.168.0.24/android_connect/get_item_details.php";
- 
-    // url to update product
-    private static final String url_update_product = "http://192.168.0.24/android_connect/update_item.php";
- 
-    // url to delete product
-    private static final String url_delete_product = "http://192.168.0.24/android_connect/delete_item.php";
+    private static final String url_item_details = Constants.url+"get_item_details.php";
     
     Item item;
  
@@ -120,11 +91,11 @@ public class DetailsActivity extends Activity {
             try {
                 // Building Parameters
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("id", id));
+                params.add(new BasicNameValuePair(TAG_ID, id));
  
                         // getting product details by making HTTP request
                 // Note that product details url will use GET request
-                JSONObject json = jsonParser.makeHttpRequest(url_product_details, "GET", params);
+                JSONObject json = jsonParser.makeHttpRequest(url_item_details, "GET", params);
  
                         // check your log for json response
                 Log.d("Single Product Details", json.toString());
@@ -139,9 +110,9 @@ public class DetailsActivity extends Activity {
                     JSONObject jsonItem = c.getJSONObject(0);
  
                     // product with this pid found
-                    txtName = (EditText) findViewById(R.id.itemName);
-                    txtCost = (EditText) findViewById(R.id.itemCost);
-                    txtDesc = (EditText) findViewById(R.id.itemDescription);
+                    txtName = (TextView) findViewById(R.id.itemName);
+                    txtCost = (TextView) findViewById(R.id.itemCost);
+                    txtDesc = (TextView) findViewById(R.id.itemDescription);
  
                     item = new Item(jsonItem.getString(TAG_NAME), jsonItem.getString(TAG_DESCRIPTION), Double.parseDouble(jsonItem.getString(TAG_COST)));
                         }else{
@@ -159,9 +130,9 @@ public class DetailsActivity extends Activity {
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once got all details
         	// product with this pid found
-            txtName = (EditText) findViewById(R.id.itemName);
-            txtCost = (EditText) findViewById(R.id.itemCost);
-            txtDesc = (EditText) findViewById(R.id.itemDescription);
+            txtName = (TextView) findViewById(R.id.itemName);
+            txtCost = (TextView) findViewById(R.id.itemCost);
+            txtDesc = (TextView) findViewById(R.id.itemDescription);
             
 		    // display product data in EditText
 		    txtName.setText(item.getName());
@@ -169,139 +140,5 @@ public class DetailsActivity extends Activity {
 		    txtDesc.setText(item.getDescription());
             pDialog.dismiss();
         }
-    }
- 
-    /**
-     * Background Async Task to  Save product Details
-     * */
-    class SaveProductDetails extends AsyncTask<String, String, String> {
- 
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(DetailsActivity.this);
-            pDialog.setMessage("Saving product ...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
-        }
- 
-        /**
-         * Saving product
-         * */
-        protected String doInBackground(String... args) {
- 
-            // getting updated data from EditTexts
-            String name = txtName.getText().toString();
-            String price = txtCost.getText().toString();
-            String description = txtDesc.getText().toString();
- 
-            // Building Parameters
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair(TAG_ID, id));
-            params.add(new BasicNameValuePair(TAG_NAME, name));
-            params.add(new BasicNameValuePair(TAG_COST, price));
-            params.add(new BasicNameValuePair(TAG_DESCRIPTION, description));
- 
-            // sending modified data through http request
-            // Notice that update product url accepts POST method
-            JSONObject json = jsonParser.makeHttpRequest(url_update_product,
-                    "POST", params);
- 
-            // check json success tag
-            try {
-                int success = json.getInt(TAG_SUCCESS);
- 
-                if (success == 1) {
-                    // successfully updated
-                    Intent i = getIntent();
-                    // send result code 100 to notify about product update
-                    setResult(100, i);
-                    finish();
-                } else {
-                    // failed to update product
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
- 
-            return null;
-        }
- 
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-        protected void onPostExecute(String file_url) {
-            // dismiss the dialog once product uupdated
-            pDialog.dismiss();
-        }
-    }
- 
-    /*****************************************************************
-     * Background Async Task to Delete Product
-     * */
-    class DeleteProduct extends AsyncTask<String, String, String> {
- 
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(DetailsActivity.this);
-            pDialog.setMessage("Deleting Product...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
-        }
- 
-        /**
-         * Deleting product
-         * */
-        protected String doInBackground(String... args) {
- 
-            // Check for success tag
-            int success;
-            try {
-                // Building Parameters
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("id", id));
- 
-                // getting product details by making HTTP request
-                JSONObject json = jsonParser.makeHttpRequest(
-                        url_delete_product, "POST", params);
- 
-                // check your log for json response
-                Log.d("Delete Product", json.toString());
- 
-                // json success tag
-                success = json.getInt(TAG_SUCCESS);
-                if (success == 1) {
-                    // product successfully deleted
-                    // notify previous activity by sending code 100
-                    Intent i = getIntent();
-                    // send result code 100 to notify about product deletion
-                    setResult(100, i);
-                    finish();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
- 
-            return null;
-        }
- 
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-        protected void onPostExecute(String file_url) {
-            // dismiss the dialog once product deleted
-            pDialog.dismiss();
- 
-        }
- 
     }
 }

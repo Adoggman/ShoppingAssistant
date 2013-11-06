@@ -68,7 +68,7 @@ public class BrowseActivity extends ListActivity {
                 // getting values from selected ListItem
                 String itemId = ((TextView) view.findViewById(R.id.id)).getText().toString();
  
-                Intent in = new Intent(getApplicationContext(), EditItemActivity.class);
+                Intent in = new Intent(getApplicationContext(), DetailsActivity.class);
                 // sending pid to next activity
                 in.putExtra(TAG_ID, itemId);
  
