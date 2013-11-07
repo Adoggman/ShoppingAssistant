@@ -51,7 +51,7 @@ public class SearchActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.browse);
+        setContentView(R.layout.search);
         // Hashmap for ListView
         itemsList = new ArrayList<HashMap<String, String>>();
         
