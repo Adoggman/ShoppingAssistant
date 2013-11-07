@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.EditText;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -56,6 +57,13 @@ public class HeisenbergMain extends Activity {
     // navigate to browse
     public void browse(View v){
     	Intent i = new Intent(getApplicationContext(), BrowseActivity.class);
+    	startActivity(i);
+    }
+    
+    public void search(View v){
+    	EditText txtSearch = (EditText) findViewById(R.id.editText1);
+    	Intent i = new Intent(getApplicationContext(), SearchActivity.class);
+    	i.putExtra("query", txtSearch.getText().toString());
     	startActivity(i);
     }
 }

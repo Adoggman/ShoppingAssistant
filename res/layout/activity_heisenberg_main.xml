@@ -9,11 +9,14 @@
     tools:context=".HeisenbergMain" >
     
     <!--  Header  Starts-->
-        <LinearLayout android:id="@+id/header"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dip"
-                android:paddingBottom="5dip">
+
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dip"
+            android:paddingTop="5dip" >
+
                 <!-- Logo Start-->
 
                 <ImageView
@@ -27,26 +30,15 @@
         <!--  Header Ends -->
 
     <Button
-        android:id="@+id/btnSearch"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="90dp"
-        android:text="@string/search"
-        android:textColor="@android:color/white"
-        android:textSize="30sp" />
-
-    <Button
         android:id="@+id/btnBrowse"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnSearch"
+        android:layout_below="@+id/header"
         android:layout_centerHorizontal="true"
+        android:onClick="browse"
         android:text="@string/browse"
         android:textColor="@android:color/white"
-        android:textSize="30sp" 
-        android:onClick="browse" />
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/btnScan"
@@ -69,5 +61,27 @@
         android:textColor="@android:color/white"
         android:textSize="30sp"
         android:onClick="login" />
+
+    <Button
+        android:id="@+id/btnSearch"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/menuBtnLogin"
+        android:layout_below="@+id/menuBtnLogin"
+        android:minHeight="28dp"
+        android:text="Search" 
+        android:onClick="search"/>
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnSearch"
+        android:layout_alignBottom="@+id/btnSearch"
+        android:layout_alignLeft="@+id/menuBtnLogin"
+        android:background="#fff"
+        android:ems="10"
+        android:textColor="#000" />
 
 </RelativeLayout>
