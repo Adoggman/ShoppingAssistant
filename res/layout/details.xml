@@ -99,6 +99,37 @@ android:padding="10dp" >
         android:textStyle="italic" >
 	</TextView>
 	
+	<TextView
+		android:id="@+id/txtDiscount"
+		android:text="Discount"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignRight="@+id/itemLocation"
+		android:layout_below="@+id/itemLocation"
+		android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="6dip"
+        android:paddingTop="6dip"
+        android:textColor="#0EBFE9"
+        android:textSize="16sp"
+        android:textStyle="bold" >
+	</TextView>
+	
+	<TextView
+		android:id="@+id/itemDiscount"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignRight="@+id/txtDiscount"
+		android:layout_below="@+id/txtDiscount"
+		android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="6dip"
+        android:paddingTop="6dip"
+        android:textColor="#ffffff"
+        android:textSize="12sp"
+        android:textStyle="italic" >
+	</TextView>
+	
 
  
 </RelativeLayout>
