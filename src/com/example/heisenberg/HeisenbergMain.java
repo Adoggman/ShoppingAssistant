@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Button;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -18,6 +19,12 @@ public class HeisenbergMain extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heisenberg_main);
+        Button btnLogin = (Button) findViewById(R.id.menuBtnLogin);
+        if (User.loggedIn(this)) {
+        	btnLogin.setText((CharSequence)"Logout");
+        } else {
+        	btnLogin.setText((CharSequence)"Login");
+        }
     }
 
     @Override
