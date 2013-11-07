@@ -103,11 +103,6 @@ public class SearchActivity extends ListActivity {
         }
  
     }
-    
-    public void addItem(View v){
-    	Intent i = new Intent(getApplicationContext(), NewItemActivity.class);
-    	startActivity(i);
-    }
  
     /**
      * Background Async Task to Load all product by making HTTP Request
