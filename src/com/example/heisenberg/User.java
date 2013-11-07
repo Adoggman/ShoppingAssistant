@@ -1,6 +1,5 @@
 package com.example.heisenberg;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.app.Activity;
 
@@ -11,8 +10,9 @@ public class User {
 	
 	public static final String PREFS_NAME = "UserFile";
 	
-	public static boolean loggedIn() {
-		return false;
+	public static boolean loggedIn(Activity activity) {
+		SharedPreferences settings = activity.getPreferences(0);
+		return settings.getBoolean("loggedIn", false);
 	}
 	
 	// Can only be used in main thread :(
@@ -55,8 +55,7 @@ public class User {
 		if (settings.getBoolean("loggedIn", false) == false) {
 			return null;
 		}
-		User user = new User(settings.getString("email", ""), settings.getString("name", ""), settings.getBoolean("admin", false));
-		return user;
+		return new User(settings.getString("email", ""), settings.getString("name", ""), settings.getBoolean("admin", false));
 	}
 	
 	public String getEmail() {
