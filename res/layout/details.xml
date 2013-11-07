@@ -22,33 +22,68 @@ android:layout_height="match_parent"
 android:background="#FFFFFF"
 android:orientation="vertical"
 android:padding="10dp" >
- 
-<TextView
-android:id="@+id/itemName"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:layout_alignLeft="@+id/textView2"
-android:layout_below="@+id/textView2"
-android:ems="10" >
-</TextView>
-
-<TextView
-android:id="@+id/itemDescription"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:layout_alignLeft="@+id/itemName"
-android:layout_below="@+id/itemName"
-android:ems="10" >
-</TextView>
-
-<TextView
-android:id="@+id/itemCost"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:layout_alignLeft="@+id/itemDescription"
-android:layout_below="@+id/itemDescription"
-android:ems="10" >
-</TextView>
+	
+	<TextView
+		android:id="@+id/itemName"
+		android:layout_alignLeft="@+id/textView2"
+		android:layout_below="@+id/textView2"
+		android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="6dip"
+        android:paddingTop="6dip"
+        android:textColor="#A4C739"
+        android:textSize="17sp"
+        android:textStyle="bold" >
+	</TextView>
+	
+	<TextView
+		android:id="@+id/itemDescription"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignLeft="@+id/itemName"
+		android:layout_below="@+id/itemName"
+		android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="6dip"
+        android:paddingTop="6dip"
+        android:textColor="#000"
+        android:textSize="12sp"
+        android:textStyle="italic" >
+	</TextView>
+	
+	<TextView
+		android:id="@+id/itemCost"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignRight="@+id/itemDescription"
+		android:layout_below="@+id/itemDescription"
+		android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="200dip"
+        android:paddingTop="6dip"
+        android:textColor="#FF0000"
+        android:textSize="13sp"
+        android:textStyle="bold" >
+	</TextView>
+	
+	<TextView
+		android:id="@+id/textLocation"
+		android:text="Store Location"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignRight="@+id/itemCost"
+		android:layout_below="@+id/itemCost"
+		android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="6dip"
+        android:paddingTop="6dip"
+        android:textColor="#0EBFE9"
+        android:textSize="16sp"
+        android:textStyle="bold" >
+	</TextView>
+	
 
  
 </RelativeLayout>

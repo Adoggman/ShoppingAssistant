@@ -136,7 +136,7 @@ public class DetailsActivity extends Activity {
             
 		    // display product data in EditText
 		    txtName.setText(item.getName());
-		    txtCost.setText(item.getCost().toString());
+		    txtCost.setText("$" + item.getCost().toString());
 		    txtDesc.setText(item.getDescription());
             pDialog.dismiss();
         }
