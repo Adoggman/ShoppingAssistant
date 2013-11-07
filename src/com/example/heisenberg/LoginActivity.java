@@ -1,7 +1,6 @@
 package com.example.heisenberg;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
@@ -20,8 +19,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class LoginActivity extends Activity {
@@ -47,6 +44,12 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        
+        if (User.loggedIn(this)) {
+        	User.getLoggedInUser(this).logOut(this);
+            Intent i = new Intent(getApplicationContext(), HeisenbergMain.class);
+            startActivity(i);
+        }
         
         TextView registerScreen = (TextView)findViewById(R.id.link_to_register);
         
@@ -118,7 +121,7 @@ public class LoginActivity extends Activity {
                 	
                 	email = jsonItem.getString(TAG_EMAIL);
                 	String name = jsonItem.getString(TAG_NAME);
-                	boolean admin = Boolean.parseBoolean(jsonItem.getString(TAG_ADMIN));
+                	boolean admin = jsonItem.getString(TAG_ADMIN).equals("1");
                 	
                 	
                 	
@@ -155,4 +158,5 @@ public class LoginActivity extends Activity {
         }
  
 	}
+
 }

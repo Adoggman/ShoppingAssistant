@@ -6,7 +6,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="browse">Browse</string>
     <string name="search">Search</string>
-    <string name="login">Login</string>
     <string name="scan">Scan</string>
 
 </resources>

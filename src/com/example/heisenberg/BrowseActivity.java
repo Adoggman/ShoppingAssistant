@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -76,6 +77,12 @@ public class BrowseActivity extends ListActivity {
                 startActivityForResult(in, 100);
             }
         });
+        
+        if (!User.loggedIn(this) || !User.getLoggedInUser(this).isAdmin()) {
+        	((Button)findViewById(R.id.btnAdd)).setVisibility(View.GONE);
+        } else {
+        	((Button)findViewById(R.id.btnAdd)).setVisibility(View.VISIBLE);
+        }
  
     }
  
