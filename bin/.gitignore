@@ -1,4 +1,4 @@
-/classes
+*.ap_
+*.dex
 
-resources.ap_
-classes.dex
+/classes
