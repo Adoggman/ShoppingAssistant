@@ -15,9 +15,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class DetailsActivity extends Activity {
@@ -25,6 +22,7 @@ public class DetailsActivity extends Activity {
     TextView txtName;
     TextView txtCost;
     TextView txtDesc;
+    TextView txtLoc;
  
     String id;
  
@@ -46,6 +44,7 @@ public class DetailsActivity extends Activity {
     private static final String TAG_NAME = "name";
     private static final String TAG_COST = "cost";
     private static final String TAG_DESCRIPTION = "description";
+    private static final String TAG_LOCATION = "location";
  
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,9 +112,11 @@ public class DetailsActivity extends Activity {
                     txtName = (TextView) findViewById(R.id.itemName);
                     txtCost = (TextView) findViewById(R.id.itemCost);
                     txtDesc = (TextView) findViewById(R.id.itemDescription);
- 
-                    item = new Item(jsonItem.getString(TAG_NAME), jsonItem.getString(TAG_DESCRIPTION), Double.parseDouble(jsonItem.getString(TAG_COST)));
-                        }else{
+                    txtLoc = (TextView) findViewById(R.id.itemLocation);
+                    
+                    item = new Item(jsonItem.getString(TAG_NAME), jsonItem.getString(TAG_DESCRIPTION), Double.parseDouble(jsonItem.getString(TAG_COST)), jsonItem.getString(TAG_LOCATION));
+                }
+                else{
                             // product with pid not found
                 }
             } catch (JSONException e) {
@@ -133,11 +134,13 @@ public class DetailsActivity extends Activity {
             txtName = (TextView) findViewById(R.id.itemName);
             txtCost = (TextView) findViewById(R.id.itemCost);
             txtDesc = (TextView) findViewById(R.id.itemDescription);
+            txtLoc = (TextView) findViewById(R.id.itemLocation);
             
 		    // display product data in EditText
 		    txtName.setText(item.getName());
-		    txtCost.setText("$" + item.getCost().toString());
+		    txtCost.setText("Price: $" + item.getCost().toString());
 		    txtDesc.setText(item.getDescription());
+		    txtLoc.setText(item.getLocation());
             pDialog.dismiss();
         }
     }
