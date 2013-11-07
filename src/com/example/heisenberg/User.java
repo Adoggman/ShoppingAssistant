@@ -11,7 +11,7 @@ public class User {
 	public static final String PREFS_NAME = "UserFile";
 	
 	public static boolean loggedIn(Activity activity) {
-		SharedPreferences settings = activity.getPreferences(0);
+		SharedPreferences settings = activity.getSharedPreferences(PREFS_NAME,0);
 		return settings.getBoolean("loggedIn", false);
 	}
 	
@@ -51,7 +51,7 @@ public class User {
 	 * @return null if nobody logged in, logged in user if someone is logged in
 	 */
 	public static User getLoggedInUser(Activity activity) {
-		SharedPreferences settings = activity.getPreferences(0);
+		SharedPreferences settings = activity.getSharedPreferences(PREFS_NAME,0);
 		if (settings.getBoolean("loggedIn", false) == false) {
 			return null;
 		}
