@@ -26,9 +26,13 @@ public class NewItemActivity extends Activity {
     EditText inputName;
     EditText inputPrice;
     EditText inputDesc;
+    EditText inputLocation;
+    EditText inputDiscount;
+    EditText inputStartDate;
+    EditText inputEndDate;
  
     // url to create new product
-    private static String url_create_product = Constants.url+"create_item.php";
+    private static String url_create_item = Constants.url+"create_item.php";
  
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -42,6 +46,10 @@ public class NewItemActivity extends Activity {
         inputName = (EditText) findViewById(R.id.inputName);
         inputPrice = (EditText) findViewById(R.id.inputPrice);
         inputDesc = (EditText) findViewById(R.id.inputDesc);
+        inputLocation = (EditText) findViewById(R.id.inputLocation);
+        inputDiscount = (EditText) findViewById(R.id.inputDiscount);
+        inputStartDate = (EditText) findViewById(R.id.inputStart);
+        inputEndDate = (EditText) findViewById(R.id.inputEnd);
  
         // Create button
         Button btnCreateProduct = (Button) findViewById(R.id.btnCreateProduct);
@@ -82,16 +90,24 @@ public class NewItemActivity extends Activity {
             String name = inputName.getText().toString();
             String cost = inputPrice.getText().toString();
             String description = inputDesc.getText().toString();
+            String location = inputLocation.getText().toString();
+            String discount = inputDiscount.getText().toString();
+            String startDate = inputStartDate.getText().toString();
+            String endDate = inputEndDate.getText().toString();
  
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("name", name));
             params.add(new BasicNameValuePair("cost", cost));
             params.add(new BasicNameValuePair("description", description));
+            params.add(new BasicNameValuePair("discount", discount));
+            params.add(new BasicNameValuePair("location", location));
+            params.add(new BasicNameValuePair("startdate", startDate));
+            params.add(new BasicNameValuePair("enddate", endDate));
  
             // getting JSON Object
             // Note that create product url accepts POST method
-            JSONObject json = jsonParser.makeHttpRequest(url_create_product,"POST", params);
+            JSONObject json = jsonParser.makeHttpRequest(url_create_item,"POST", params);
  
             // check log cat fro response
             Log.d("Create Response", json.toString());
