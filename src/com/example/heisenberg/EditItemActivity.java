@@ -18,16 +18,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class EditItemActivity extends Activity {
     EditText txtName;
-    EditText txtPrice;
+    EditText txtCost;
     EditText txtDesc;
-    EditText txtCreatedAt;
+    EditText txtLocation;
+    EditText txtDiscount;
+    EditText txtStart;
+    EditText txtEnd;
     Button btnSave;
     Button btnDelete;
  
     String id;
+    Item item;
  
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -47,11 +52,15 @@ public class EditItemActivity extends Activity {
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_ITEM = "item";
-    private static final String TAG_id = "id";
+    private static final String TAG_ID = "id";
     private static final String TAG_NAME = "name";
     private static final String TAG_COST = "cost";
     private static final String TAG_DESCRIPTION = "description";
- 
+    private static final String TAG_LOCATION = "location";
+    private static final String TAG_DISCOUNT = "discount";
+    private static final String TAG_STARTDATE = "startdate";
+    private static final String TAG_ENDDATE = "enddate";
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +74,7 @@ public class EditItemActivity extends Activity {
         Intent i = getIntent();
  
         // getting product id (id) from intent
-        id = i.getStringExtra(TAG_id);
+        id = i.getStringExtra(TAG_ID);
  
         // Getting complete product details in background thread
         new GetProductDetails().execute();
@@ -104,7 +113,7 @@ public class EditItemActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(EditItemActivity.this);
-            pDialog.setMessage("Loading product details. Please wait...");
+            pDialog.setMessage("Loading item details. Please wait...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
@@ -113,56 +122,54 @@ public class EditItemActivity extends Activity {
         /**
          * Getting product details in background thread
          * */
-        protected String doInBackground(String... params) {
+        protected String doInBackground(String... args) {
  
-            // updating UI from Background Thread
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    // Check for success tag
-                    int success;
-                    try {
-                        // Building Parameters
-                        List<NameValuePair> params = new ArrayList<NameValuePair>();
-                        params.add(new BasicNameValuePair("id", id));
+            // Check for success tag
+            int success;
+            try {
+                // Building Parameters
+                List<NameValuePair> params = new ArrayList<NameValuePair>();
+                params.add(new BasicNameValuePair(TAG_ID, id));
  
                         // getting product details by making HTTP request
-                        // Note that product details url will use GET request
-                        JSONObject json = jsonParser.makeHttpRequest(
-                                url_item_details, "GET", params);
+                // Note that product details url will use GET request
+                JSONObject json = jsonParser.makeHttpRequest(url_item_details, "GET", params);
  
                         // check your log for json response
-                        Log.d("Single Product Details", json.toString());
+                Log.d("Single Product Details", json.toString());
  
                         // json success tag
-                        success = json.getInt(TAG_SUCCESS);
-                        if (success == 1) {
-                            // successfully received product details
-                            JSONArray productObj = json
-                                    .getJSONArray(TAG_ITEM); // JSON Array
+                success = json.getInt(TAG_SUCCESS);
+                if (success == 1) {
+                    // successfully received product details
+                    JSONArray c = json.getJSONArray(TAG_ITEM); // JSON Array
  
-                            // get first product object from JSON Array
-                            JSONObject product = productObj.getJSONObject(0);
+                    // get first product object from JSON Array
+                    JSONObject jsonItem = c.getJSONObject(0);
  
-                            // product with this id found
-                            // Edit Text
-                            txtName = (EditText) findViewById(R.id.inputName);
-                            txtPrice = (EditText) findViewById(R.id.inputPrice);
-                            txtDesc = (EditText) findViewById(R.id.inputDesc);
- 
-                            // display product data in EditText
-                            txtName.setText(product.getString(TAG_NAME));
-                            txtPrice.setText(product.getString(TAG_COST));
-                            txtDesc.setText(product.getString(TAG_DESCRIPTION));
- 
-                        }else{
-                            // product with id not found
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    // product with this pid found
+                    txtName = (EditText) findViewById(R.id.inputName);
+                    txtCost = (EditText) findViewById(R.id.inputPrice);
+                    txtDesc = (EditText) findViewById(R.id.inputDesc);
+                    txtLocation = (EditText) findViewById(R.id.inputLocation);
+                    txtDiscount = (EditText) findViewById(R.id.inputDiscount);
+                    txtStart = (EditText) findViewById(R.id.inputStart);
+                    txtEnd = (EditText) findViewById(R.id.inputEnd);
+                    
+                    item = new Item(jsonItem.getString(TAG_NAME), 
+                    		jsonItem.getString(TAG_DESCRIPTION), 
+                    		Double.parseDouble(jsonItem.getString(TAG_COST)), 
+                    		jsonItem.getString(TAG_LOCATION), 
+                    		Integer.parseInt(jsonItem.getString(TAG_DISCOUNT)),
+                    		jsonItem.getString(TAG_STARTDATE),
+                    		jsonItem.getString(TAG_ENDDATE));
                 }
-            });
- 
+                else{
+                            // product with pid not found
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             return null;
         }
  
@@ -171,6 +178,15 @@ public class EditItemActivity extends Activity {
          * **/
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once got all details
+		    // display product data in EditText
+		    txtName.setText(item.getName());
+		    txtCost.setText(item.getCost().toString());
+		    txtDesc.setText(item.getDescription());
+		    txtLocation.setText(item.getLocation());
+		    txtDiscount.setText( Integer.toString(item.getDiscount()));
+		    txtStart.setText(item.getStartDate());
+		    txtEnd.setText(item.getEndDate());
+		    
             pDialog.dismiss();
         }
     }
@@ -187,7 +203,7 @@ public class EditItemActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(EditItemActivity.this);
-            pDialog.setMessage("Saving product ...");
+            pDialog.setMessage("Saving item ...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
@@ -200,15 +216,23 @@ public class EditItemActivity extends Activity {
  
             // getting updated data from EditTexts
             String name = txtName.getText().toString();
-            String price = txtPrice.getText().toString();
+            String cost = txtCost.getText().toString();
             String description = txtDesc.getText().toString();
+            String location = txtLocation.getText().toString();
+            String discount = txtDiscount.getText().toString();
+            String start = txtStart.getText().toString();
+            String end = txtEnd.getText().toString();
  
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair(TAG_id, id));
+            params.add(new BasicNameValuePair(TAG_ID, id));
             params.add(new BasicNameValuePair(TAG_NAME, name));
-            params.add(new BasicNameValuePair(TAG_COST, price));
+            params.add(new BasicNameValuePair(TAG_COST, cost));
             params.add(new BasicNameValuePair(TAG_DESCRIPTION, description));
+            params.add(new BasicNameValuePair(TAG_LOCATION, location));
+            params.add(new BasicNameValuePair(TAG_DISCOUNT, discount));
+            params.add(new BasicNameValuePair(TAG_STARTDATE, start));
+            params.add(new BasicNameValuePair(TAG_ENDDATE, end));
  
             // sending modified data through http request
             // Notice that update product url accepts POST method
@@ -256,7 +280,7 @@ public class EditItemActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(EditItemActivity.this);
-            pDialog.setMessage("Deleting Product...");
+            pDialog.setMessage("Deleting Item...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
@@ -304,7 +328,8 @@ public class EditItemActivity extends Activity {
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once product deleted
             pDialog.dismiss();
- 
+            Intent i = new Intent(getApplicationContext(), BrowseActivity.class);
+        	startActivity(i);
         }
  
     }

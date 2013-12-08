@@ -41,7 +41,7 @@
         android:layout_below="@+id/relativeLayout1"
         android:orientation="vertical"
         android:layout_marginTop="40dp">
- 
+            
     <ListView
          android:id="@android:id/list"
          android:layout_width="match_parent"

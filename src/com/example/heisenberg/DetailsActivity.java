@@ -1,6 +1,7 @@
 package com.example.heisenberg;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
@@ -48,6 +49,8 @@ public class DetailsActivity extends Activity {
     private static final String TAG_DESCRIPTION = "description";
     private static final String TAG_LOCATION = "location";
     private static final String TAG_DISCOUNT = "discount";
+    private static final String TAG_STARTDATE = "startdate";
+    private static final String TAG_ENDDATE = "enddate";
  
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,28 @@ public class DetailsActivity extends Activity {
         }
         // Getting complete product details in background thread
         new GetProductDetails().execute();
+ 
+    }
+    
+    public void editItem(View v){
+    	Intent i = new Intent(getApplicationContext(), EditItemActivity.class);
+    	i.putExtra("id", id);
+    	startActivityForResult(i, 100);
+    }
+    
+ // Response from Edit Product Activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // if result code 100
+        if (resultCode == 100) {
+            // if result code 100 is received
+            // means user edited/deleted product
+            // reload this screen again
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
  
     }
  
@@ -127,7 +152,9 @@ public class DetailsActivity extends Activity {
                     		jsonItem.getString(TAG_DESCRIPTION), 
                     		Double.parseDouble(jsonItem.getString(TAG_COST)), 
                     		jsonItem.getString(TAG_LOCATION), 
-                    		Integer.parseInt(jsonItem.getString(TAG_DISCOUNT)));
+                    		Integer.parseInt(jsonItem.getString(TAG_DISCOUNT)),
+                    		jsonItem.getString(TAG_STARTDATE),
+                    		jsonItem.getString(TAG_ENDDATE));
                 }
                 else{
                             // product with pid not found
@@ -148,15 +175,35 @@ public class DetailsActivity extends Activity {
             txtCost = (TextView) findViewById(R.id.itemCost);
             txtDesc = (TextView) findViewById(R.id.itemDescription);
             txtLoc = (TextView) findViewById(R.id.itemLocation);
+            int discount = 0;
+            
+            Date startDate = getDate(item.getStartDate());
+            Date endDate = getDate(item.getEndDate());
+            Date currentDate = new Date();
+            
+            if (currentDate.before(endDate) && currentDate.after(startDate)){
+            	discount = item.getDiscount();
+            }      
 
 		    // display product data in EditText
 		    txtName.setText(item.getName());
 		    txtCost.setText("Price: $" + item.getCost().toString());
 		    txtDesc.setText(item.getDescription());
 		    txtLoc.setText(item.getLocation());
-		    txtDisc.setText("This item is currently " + item.getDiscount() + "% off.");
+		    txtDisc.setText("This item is currently " + discount + "% off.");
 		    
             pDialog.dismiss();
         }
+    }
+    
+    private Date getDate(String date)
+    {
+    	String[] fullDate = date.split("-");
+    	// Date attribute year is year + 1900
+    	int year = Integer.parseInt(fullDate[0]) - 1900;
+    	int month = Integer.parseInt(fullDate[1]) - 1;
+    	int day = Integer.parseInt(fullDate[2]);
+    	
+    	return new Date(year, month, day);
     }
 }

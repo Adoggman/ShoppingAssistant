@@ -129,8 +129,19 @@ android:padding="10dp" >
         android:textSize="12sp"
         android:textStyle="italic" >
 	</TextView>
-	
 
+	<Button
+	    android:id="@+id/btnEdit"
+	    android:layout_width="50dp"
+	    android:layout_height="30dp"
+	    android:layout_alignLeft="@+id/itemDiscount"
+	    android:layout_below="@+id/itemDiscount"
+	    android:layout_marginLeft="17dp"
+	    android:background="#454545"
+	    android:onClick="editItem"
+	    android:text="Edit"
+	    android:textColor="#FFFFFF"
+	    android:textSize="20sp" />
  
 </RelativeLayout>
  
