@@ -7,7 +7,7 @@ android:orientation="vertical"
 android:paddingTop="1dp" >
  
 <TextView
-android:id="@+id/textView1"
+android:id="@+id/item1Name"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:background="#000000"
@@ -24,18 +24,19 @@ android:orientation="vertical"
 android:padding="10dp" >
 	
 	<TextView
-		android:id="@+id/itemName"
-		android:layout_alignLeft="@+id/textView2"
-		android:layout_below="@+id/textView2"
-		android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="6dip"
-        android:paddingTop="6dip"
-        android:textColor="#A4C739"
-        android:textSize="17sp"
-        android:textStyle="bold" >
+	    android:id="@+id/itemName"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/item2Name"
+	    android:layout_below="@+id/item2Name"
+	    android:layout_marginBottom="5dp"
+	    android:layout_marginTop="5dp"
+	    android:paddingLeft="6dip"
+	    android:paddingTop="6dip"
+	    android:textColor="#A4C739"
+	    android:textSize="17sp"
+	    android:textStyle="bold" >
+
 	</TextView>
 	
 	<TextView

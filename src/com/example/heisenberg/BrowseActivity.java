@@ -69,15 +69,19 @@ public class BrowseActivity extends ListActivity {
                 // getting values from selected ListItem
                 String itemId = ((TextView) view.findViewById(R.id.id)).getText().toString();
  
-                Intent in = new Intent(getApplicationContext(), DetailsActivity.class);
-                // sending pid to next activity
-                in.putExtra(TAG_ID, itemId);
+                Intent in;
+
                 
                 // See if there is an item to compare to
                 String compareID = getIntent().getStringExtra("compareID");
                 if (compareID != null) {
+                	in = new Intent(getApplicationContext(), CompareActivity.class);
                 	in.putExtra("compareID", compareID);
+                } else {
+                	in = new Intent(getApplicationContext(), DetailsActivity.class);
                 }
+                // sending pid to next activity
+                in.putExtra(TAG_ID, itemId);
  
              // starting new activity and expecting some response back
                 startActivityForResult(in, 100);

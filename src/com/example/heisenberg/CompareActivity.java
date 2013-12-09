@@ -18,15 +18,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Button;
 
-public class DetailsActivity extends Activity {
-	 
-    TextView txtName;
-    TextView txtCost;
-    TextView txtDesc;
-    TextView txtLoc;
-    TextView txtDisc;
+public class CompareActivity extends Activity {
+	
+	TextView txtName1;
+    TextView txtCost1;
+    TextView txtDesc1;
+    TextView txtLoc1;
+    TextView txtDisc1;
+    
+	TextView txtName2;
+    TextView txtCost2;
+    TextView txtDesc2;
+    TextView txtLoc2;
+    TextView txtDisc2;
  
     String id;
     String id2;
@@ -41,6 +46,7 @@ public class DetailsActivity extends Activity {
     private static final String url_item_details = Constants.url+"get_item_details.php";
     
     Item item;
+    Item item2;
  
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -57,38 +63,25 @@ public class DetailsActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.details);
+        setContentView(R.layout.compare);
  
         // getting product details from intent
         Intent i = getIntent();
  
         // getting product id (pid) from intent
         id = i.getStringExtra(TAG_ID);
-        txtDisc = (TextView) findViewById(R.id.itemDiscount);
+        id2 = i.getStringExtra("compareID");
+        txtDisc1 = (TextView) findViewById(R.id.item1Discount);
+        txtDisc2 = (TextView) findViewById(R.id.item2Discount);
         
         if (!User.loggedIn(this)) {
-		    txtDisc.setVisibility(View.GONE);
-		   ((TextView) findViewById(R.id.txtDiscount)).setVisibility(View.GONE);
-        }
-        
-        if (!User.loggedIn(this) || !User.getLoggedInUser(this).isAdmin()) {
-        	((Button) findViewById(R.id.btnEdit)).setVisibility(View.GONE);
+		    txtDisc1.setVisibility(View.GONE);
+		    txtDisc2.setVisibility(View.GONE);
+		   ((TextView) findViewById(R.id.txtCompareDiscount)).setVisibility(View.GONE);
         }
         // Getting complete product details in background thread
         new GetProductDetails().execute();
  
-    }
-    
-    public void editItem(View v){
-    	Intent i = new Intent(getApplicationContext(), EditItemActivity.class);
-    	i.putExtra("id", id);
-    	startActivityForResult(i, 100);
-    }
-    
-    public void compare(View v) {
-    	Intent i = new Intent(getApplicationContext(), BrowseActivity.class);
-    	i.putExtra("compareID", id);
-    	startActivity(i);
     }
     
     
@@ -120,7 +113,7 @@ public class DetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(DetailsActivity.this);
+            pDialog = new ProgressDialog(CompareActivity.this);
             pDialog.setMessage("Loading item details. Please wait...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
@@ -156,13 +149,56 @@ public class DetailsActivity extends Activity {
                     JSONObject jsonItem = c.getJSONObject(0);
  
                     // product with this pid found
-                    txtName = (TextView) findViewById(R.id.itemName);
-                    txtCost = (TextView) findViewById(R.id.itemCost);
-                    txtDesc = (TextView) findViewById(R.id.itemDescription);
-                    txtLoc = (TextView) findViewById(R.id.itemLocation);
-                    txtDisc = (TextView) findViewById(R.id.itemDiscount);
+                    txtName1 = (TextView) findViewById(R.id.item1Name);
+                    txtCost1 = (TextView) findViewById(R.id.item1Cost);
+                    txtDesc1 = (TextView) findViewById(R.id.item1Description);
+                    txtLoc1 = (TextView) findViewById(R.id.item1Location);
+                    txtDisc1 = (TextView) findViewById(R.id.item1Discount);
                     
                     item = new Item(jsonItem.getString(TAG_NAME), 
+                    		jsonItem.getString(TAG_DESCRIPTION), 
+                    		Double.parseDouble(jsonItem.getString(TAG_COST)), 
+                    		jsonItem.getString(TAG_LOCATION), 
+                    		Integer.parseInt(jsonItem.getString(TAG_DISCOUNT)),
+                    		jsonItem.getString(TAG_STARTDATE),
+                    		jsonItem.getString(TAG_ENDDATE));
+                }
+                else{
+                            // product with pid not found
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            
+            try {
+                // Building Parameters
+                List<NameValuePair> params = new ArrayList<NameValuePair>();
+                params.add(new BasicNameValuePair(TAG_ID, id2));
+ 
+                        // getting product details by making HTTP request
+                // Note that product details url will use GET request
+                JSONObject json = jsonParser.makeHttpRequest(url_item_details, "GET", params);
+ 
+                        // check your log for json response
+                Log.d("Single Product Details", json.toString());
+ 
+                        // json success tag
+                success = json.getInt(TAG_SUCCESS);
+                if (success == 1) {
+                    // successfully received product details
+                    JSONArray c = json.getJSONArray(TAG_ITEM); // JSON Array
+ 
+                    // get first product object from JSON Array
+                    JSONObject jsonItem = c.getJSONObject(0);
+ 
+                    // product with this pid found
+                    txtName2 = (TextView) findViewById(R.id.item2Name);
+                    txtCost2 = (TextView) findViewById(R.id.item2Cost);
+                    txtDesc2 = (TextView) findViewById(R.id.item2Description);
+                    txtLoc2 = (TextView) findViewById(R.id.item2Location);
+                    txtDisc2 = (TextView) findViewById(R.id.item2Discount);
+                    
+                    item2 = new Item(jsonItem.getString(TAG_NAME), 
                     		jsonItem.getString(TAG_DESCRIPTION), 
                     		Double.parseDouble(jsonItem.getString(TAG_COST)), 
                     		jsonItem.getString(TAG_LOCATION), 
@@ -185,10 +221,11 @@ public class DetailsActivity extends Activity {
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once got all details
         	// product with this pid found
-            txtName = (TextView) findViewById(R.id.itemName);
-            txtCost = (TextView) findViewById(R.id.itemCost);
-            txtDesc = (TextView) findViewById(R.id.itemDescription);
-            txtLoc = (TextView) findViewById(R.id.itemLocation);
+            txtName1 = (TextView) findViewById(R.id.item1Name);
+            txtCost1 = (TextView) findViewById(R.id.item1Cost);
+            txtDesc1 = (TextView) findViewById(R.id.item1Description);
+            txtLoc1 = (TextView) findViewById(R.id.item1Location);
+            txtDisc1 = (TextView) findViewById(R.id.item1Discount);
             int discount = 0;
             
             Date startDate = getDate(item.getStartDate());
@@ -200,17 +237,39 @@ public class DetailsActivity extends Activity {
             }      
 
 		    // display product data in EditText
-		    txtName.setText(item.getName());
-		    txtCost.setText("Price: $" + item.getCost().toString());
-		    txtDesc.setText(item.getDescription());
-		    txtLoc.setText(item.getLocation());
-		    txtDisc.setText("This item is currently " + discount + "% off.");
+		    txtName1.setText(item.getName());
+		    txtCost1.setText("Price: $" + item.getCost().toString());
+		    txtDesc1.setText(item.getDescription());
+		    txtLoc1.setText(item.getLocation());
+		    txtDisc1.setText("This item is currently " + discount + "% off.");
+		    
+            txtName2 = (TextView) findViewById(R.id.item2Name);
+            txtCost2 = (TextView) findViewById(R.id.item2Cost);
+            txtDesc2 = (TextView) findViewById(R.id.item2Description);
+            txtLoc2 = (TextView) findViewById(R.id.item2Location);
+            txtDisc2 = (TextView) findViewById(R.id.item2Discount);
+            discount = 0;
+            
+            startDate = getDate(item2.getStartDate());
+            endDate = getDate(item2.getEndDate());
+            
+            if (currentDate.before(endDate) && currentDate.after(startDate)){
+            	discount = item2.getDiscount();
+            }      
+
+		    // display product data in EditText
+		    txtName2.setText(item2.getName());
+		    txtCost2.setText("Price: $" + item2.getCost().toString());
+		    txtDesc2.setText(item2.getDescription());
+		    txtLoc2.setText(item2.getLocation());
+		    txtDisc2.setText("This item is currently " + discount + "% off.");
 		    
             pDialog.dismiss();
         }
     }
     
-    private Date getDate(String date)
+    @SuppressWarnings("deprecation")
+	private Date getDate(String date)
     {
     	String[] fullDate = date.split("-");
     	// Date attribute year is year + 1900
@@ -220,4 +279,5 @@ public class DetailsActivity extends Activity {
     	
     	return new Date(year, month, day);
     }
+
 }
