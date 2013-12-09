@@ -131,12 +131,26 @@ android:padding="10dp" >
 	</TextView>
 
 	<Button
-	    android:id="@+id/btnEdit"
+	    android:id="@+id/btnCompare"
 	    android:layout_width="50dp"
 	    android:layout_height="30dp"
 	    android:layout_alignLeft="@+id/itemDiscount"
+	    android:layout_alignRight="@+id/itemDiscount"
 	    android:layout_below="@+id/itemDiscount"
-	    android:layout_marginLeft="17dp"
+	    android:background="#454545"
+	    android:onClick="editItem"
+	    android:text="Compare"
+	    android:textColor="#FFFFFF"
+	    android:textSize="20sp" />
+
+	<Button
+	    android:id="@+id/btnEdit"
+	    android:layout_width="50dp"
+	    android:layout_height="30dp"
+	    android:layout_alignLeft="@+id/btnCompare"
+	    android:layout_alignRight="@+id/btnCompare"
+	    android:layout_below="@+id/btnCompare"
+	    android:layout_marginTop="15dp"
 	    android:background="#454545"
 	    android:onClick="editItem"
 	    android:text="Edit"
