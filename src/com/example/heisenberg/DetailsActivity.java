@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Button;
 
 public class DetailsActivity extends Activity {
 	 
@@ -67,6 +68,10 @@ public class DetailsActivity extends Activity {
         if (!User.loggedIn(this)) {
 		    txtDisc.setVisibility(View.GONE);
 		   ((TextView) findViewById(R.id.txtDiscount)).setVisibility(View.GONE);
+        }
+        
+        if (!User.loggedIn(this) || !User.getLoggedInUser(this).isAdmin()) {
+        	((Button) findViewById(R.id.btnEdit)).setVisibility(View.GONE);
         }
         // Getting complete product details in background thread
         new GetProductDetails().execute();
