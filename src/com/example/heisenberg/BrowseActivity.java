@@ -72,6 +72,12 @@ public class BrowseActivity extends ListActivity {
                 Intent in = new Intent(getApplicationContext(), DetailsActivity.class);
                 // sending pid to next activity
                 in.putExtra(TAG_ID, itemId);
+                
+                // See if there is an item to compare to
+                String compareID = getIntent().getStringExtra("compareID");
+                if (compareID != null) {
+                	in.putExtra("compareID", compareID);
+                }
  
              // starting new activity and expecting some response back
                 startActivityForResult(in, 100);

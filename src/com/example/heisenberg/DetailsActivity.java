@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +30,7 @@ public class DetailsActivity extends Activity {
     TextView txtDisc;
  
     String id;
+    String id2;
  
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -65,6 +67,14 @@ public class DetailsActivity extends Activity {
         id = i.getStringExtra(TAG_ID);
         txtDisc = (TextView) findViewById(R.id.itemDiscount);
         
+    	SharedPreferences settings = this.getSharedPreferences(User.PREFS_NAME, 0);
+    	// Load the ID of the item to be compared to 
+    	id2 = settings.getString("compareID", "");
+    	// Clear the comparison checker
+    	SharedPreferences.Editor editor = settings.edit();
+    	editor.putString("compareID", "");
+    	editor.commit();
+        
         if (!User.loggedIn(this)) {
 		    txtDisc.setVisibility(View.GONE);
 		   ((TextView) findViewById(R.id.txtDiscount)).setVisibility(View.GONE);
@@ -83,6 +93,14 @@ public class DetailsActivity extends Activity {
     	i.putExtra("id", id);
     	startActivityForResult(i, 100);
     }
+    
+    public void compare(View v) {
+    	Intent i = new Intent(getApplicationContext(), BrowseActivity.class);
+    	i.putExtra("compareID", id);
+    	startActivityForResult(i,100);
+    }
+    
+    
     
  // Response from Edit Product Activity
     @Override
