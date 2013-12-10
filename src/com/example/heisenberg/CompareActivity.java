@@ -65,10 +65,10 @@ public class CompareActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.compare);
  
-        // getting product details from intent
+        // getting item details from intent
         Intent i = getIntent();
  
-        // getting product id (pid) from intent
+        // getting item id from intent
         id = i.getStringExtra(TAG_ID);
         id2 = i.getStringExtra("compareID");
         txtDisc1 = (TextView) findViewById(R.id.item1Discount);
@@ -79,14 +79,14 @@ public class CompareActivity extends Activity {
 		    txtDisc2.setVisibility(View.GONE);
 		   ((TextView) findViewById(R.id.txtCompareDiscount)).setVisibility(View.GONE);
         }
-        // Getting complete product details in background thread
-        new GetProductDetails().execute();
+        // Getting complete item details in background thread
+        new GetItemDetails().execute();
  
     }
     
     
     
- // Response from Edit Product Activity
+    // Response from Edit Item Activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -103,13 +103,11 @@ public class CompareActivity extends Activity {
     }
  
     /**
-     * Background Async Task to Get complete product details
+     * Background Async Task to Get complete item details
      * */
-    class GetProductDetails extends AsyncTask<String, String, String> {
+    class GetItemDetails extends AsyncTask<String, String, String> {
  
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
+        // Before starting background thread Show Progress Dialog
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -121,7 +119,7 @@ public class CompareActivity extends Activity {
         }
  
         /**
-         * Getting product details in background thread
+         * Getting item details in background thread
          * */
         protected String doInBackground(String... args) {
  
@@ -132,23 +130,22 @@ public class CompareActivity extends Activity {
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair(TAG_ID, id));
  
-                        // getting product details by making HTTP request
-                // Note that product details url will use GET request
+                // getting item details by making HTTP request
                 JSONObject json = jsonParser.makeHttpRequest(url_item_details, "GET", params);
  
                         // check your log for json response
-                Log.d("Single Product Details", json.toString());
+                Log.d("Single Item Details", json.toString());
  
-                        // json success tag
+                // json success tag
                 success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
-                    // successfully received product details
+                    // successfully received item details
                     JSONArray c = json.getJSONArray(TAG_ITEM); // JSON Array
  
-                    // get first product object from JSON Array
+                    // get first item object from JSON Array
                     JSONObject jsonItem = c.getJSONObject(0);
  
-                    // product with this pid found
+                    // item with this id found
                     txtName1 = (TextView) findViewById(R.id.item1Name);
                     txtCost1 = (TextView) findViewById(R.id.item1Cost);
                     txtDesc1 = (TextView) findViewById(R.id.item1Description);
@@ -164,7 +161,7 @@ public class CompareActivity extends Activity {
                     		jsonItem.getString(TAG_ENDDATE));
                 }
                 else{
-                            // product with pid not found
+                	// item with not found
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -175,12 +172,11 @@ public class CompareActivity extends Activity {
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair(TAG_ID, id2));
  
-                        // getting product details by making HTTP request
-                // Note that product details url will use GET request
+                // getting item details by making HTTP request
                 JSONObject json = jsonParser.makeHttpRequest(url_item_details, "GET", params);
  
                         // check your log for json response
-                Log.d("Single Product Details", json.toString());
+                Log.d("Single Item Details", json.toString());
  
                         // json success tag
                 success = json.getInt(TAG_SUCCESS);
@@ -232,6 +228,7 @@ public class CompareActivity extends Activity {
             Date endDate = getDate(item.getEndDate());
             Date currentDate = new Date();
             
+            // only display discount if within valid time period
             if (currentDate.before(endDate) && currentDate.after(startDate)){
             	discount = item.getDiscount();
             }      
@@ -253,6 +250,7 @@ public class CompareActivity extends Activity {
             startDate = getDate(item2.getStartDate());
             endDate = getDate(item2.getEndDate());
             
+         // only display discount if within valid time period
             if (currentDate.before(endDate) && currentDate.after(startDate)){
             	discount = item2.getDiscount();
             }      
@@ -269,6 +267,7 @@ public class CompareActivity extends Activity {
     }
     
     @SuppressWarnings("deprecation")
+    // returns Date object based on string of format YYYY-MM-D
 	private Date getDate(String date)
     {
     	String[] fullDate = date.split("-");

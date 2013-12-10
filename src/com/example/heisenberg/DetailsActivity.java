@@ -66,25 +66,29 @@ public class DetailsActivity extends Activity {
         id = i.getStringExtra(TAG_ID);
         txtDisc = (TextView) findViewById(R.id.itemDiscount);
         
+        // if the user is not logged in, don't display discounts
         if (!User.loggedIn(this)) {
 		    txtDisc.setVisibility(View.GONE);
 		   ((TextView) findViewById(R.id.txtDiscount)).setVisibility(View.GONE);
         }
         
+        // if the user is not an admin, do not display the edit item button
         if (!User.loggedIn(this) || !User.getLoggedInUser(this).isAdmin()) {
         	((Button) findViewById(R.id.btnEdit)).setVisibility(View.GONE);
         }
         // Getting complete product details in background thread
-        new GetProductDetails().execute();
+        new GetItemDetails().execute();
  
     }
     
+    // redirect to the edit item view
     public void editItem(View v){
     	Intent i = new Intent(getApplicationContext(), EditItemActivity.class);
     	i.putExtra("id", id);
     	startActivityForResult(i, 100);
     }
     
+    // redirect to the compare item view
     public void compare(View v) {
     	Intent i = new Intent(getApplicationContext(), BrowseActivity.class);
     	i.putExtra("compareID", id);
@@ -93,7 +97,7 @@ public class DetailsActivity extends Activity {
     
     
     
- // Response from Edit Product Activity
+    // Response from Edit Item Activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -112,7 +116,7 @@ public class DetailsActivity extends Activity {
     /**
      * Background Async Task to Get complete product details
      * */
-    class GetProductDetails extends AsyncTask<String, String, String> {
+    class GetItemDetails extends AsyncTask<String, String, String> {
  
         /**
          * Before starting background thread Show Progress Dialog
@@ -139,14 +143,13 @@ public class DetailsActivity extends Activity {
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair(TAG_ID, id));
  
-                        // getting product details by making HTTP request
-                // Note that product details url will use GET request
+                // getting product details by making HTTP request
                 JSONObject json = jsonParser.makeHttpRequest(url_item_details, "GET", params);
  
-                        // check your log for json response
+                // check your log for json response
                 Log.d("Single Product Details", json.toString());
  
-                        // json success tag
+                // json success tag
                 success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
                     // successfully received product details
@@ -171,7 +174,7 @@ public class DetailsActivity extends Activity {
                     		jsonItem.getString(TAG_ENDDATE));
                 }
                 else{
-                            // product with pid not found
+                            // item not found
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -184,7 +187,6 @@ public class DetailsActivity extends Activity {
          * **/
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once got all details
-        	// product with this pid found
             txtName = (TextView) findViewById(R.id.itemName);
             txtCost = (TextView) findViewById(R.id.itemCost);
             txtDesc = (TextView) findViewById(R.id.itemDescription);
@@ -195,6 +197,7 @@ public class DetailsActivity extends Activity {
             Date endDate = getDate(item.getEndDate());
             Date currentDate = new Date();
             
+            // only display the discount during valid discount time period
             if (currentDate.before(endDate) && currentDate.after(startDate)){
             	discount = item.getDiscount();
             }      
@@ -211,6 +214,7 @@ public class DetailsActivity extends Activity {
     }
     
     @SuppressWarnings("deprecation")
+    // Return a Date object based on String with format YYYY-MM-DD
 	private Date getDate(String date)
     {
     	String[] fullDate = date.split("-");

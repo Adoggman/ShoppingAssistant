@@ -33,7 +33,7 @@ public class SearchActivity extends ListActivity {
  
     ArrayList<HashMap<String, String>> itemsList;
  
-    // url to get all products list
+    // url to get all items list
     private static String url_search_item = Constants.url+"search_item.php";
     
     private String query = "";
@@ -45,8 +45,8 @@ public class SearchActivity extends ListActivity {
     private static final String TAG_NAME = "name";
     private static final String TAG_QUERY = "query";
  
-    // products JSONArray
-    JSONArray products = null;
+    // items JSONArray
+    JSONArray items = null;
  
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,20 +55,20 @@ public class SearchActivity extends ListActivity {
         // Hashmap for ListView
         itemsList = new ArrayList<HashMap<String, String>>();
         
-     // getting product details from intent
+        // getting item details from intent
         Intent i = getIntent();
  
         // getting product id (pid) from intent
         query = i.getStringExtra(TAG_QUERY);
  
         // Loading products in Background Thread
-        new LoadAllProducts().execute();
+        new LoadAllItems().execute();
  
         // Get listview
         ListView lv = getListView();
  
         // on seleting single product
-        // launching Edit Product Screen
+        // launching Edit item Screen
         lv.setOnItemClickListener(new OnItemClickListener() {
  
             @Override
@@ -107,7 +107,7 @@ public class SearchActivity extends ListActivity {
     /**
      * Background Async Task to Load all product by making HTTP Request
      * */
-    class LoadAllProducts extends AsyncTask<String, String, String> {
+    class LoadAllItems extends AsyncTask<String, String, String> {
  
         /**
          * Before starting background thread Show Progress Dialog
@@ -123,7 +123,7 @@ public class SearchActivity extends ListActivity {
         }
  
         /**
-         * getting All products from url
+         * getting All items from url
          * */
         protected String doInBackground(String... args) {
             // Building Parameters
@@ -143,11 +143,11 @@ public class SearchActivity extends ListActivity {
                 if (success == 1) {
                     // products found
                     // Getting Array of Products
-                    products = json.getJSONArray(TAG_ITEMS);
+                    items = json.getJSONArray(TAG_ITEMS);
  
                     // looping through All Products
-                    for (int i = 0; i < products.length(); i++) {
-                        JSONObject c = products.getJSONObject(i);
+                    for (int i = 0; i < items.length(); i++) {
+                        JSONObject c = items.getJSONObject(i);
  
                         // Storing each json item in variable
                         String id = c.getString(TAG_ID);
@@ -164,13 +164,7 @@ public class SearchActivity extends ListActivity {
                         itemsList.add(map);
                     }
                 } else {
-                    // no products found
-                    // Launch Add New product Activity
-//                    Intent i = new Intent(getApplicationContext(),
-//                            NewProductActivity.class);
-//                    // Closing all previous activities
-//                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    startActivity(i);
+                	// no items found
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -188,20 +182,15 @@ public class SearchActivity extends ListActivity {
             // updating UI from Background Thread
             runOnUiThread(new Runnable() {
                 public void run() {
-                    /**
-                     * Updating parsed JSON data into ListView
-                     * */
+                    // Updating parsed JSON data into ListView
                     ListAdapter adapter = new SimpleAdapter(
                             SearchActivity.this, itemsList,
-                            R.layout.view_item_entry, new String[] { TAG_ID,
-                                    TAG_NAME},
+                            R.layout.view_item_entry, new String[] { TAG_ID, TAG_NAME},
                             new int[] { R.id.id, R.id.name });
                     // updating listview
                     setListAdapter(adapter);
                 }
             });
- 
         }
- 
     }
 }

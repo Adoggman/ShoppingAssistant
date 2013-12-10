@@ -31,7 +31,7 @@ public class NewItemActivity extends Activity {
     EditText inputStartDate;
     EditText inputEndDate;
  
-    // url to create new product
+    // url to create new item
     private static String url_create_item = Constants.url+"create_item.php";
  
     // JSON Node names
@@ -52,15 +52,15 @@ public class NewItemActivity extends Activity {
         inputEndDate = (EditText) findViewById(R.id.inputEnd);
  
         // Create button
-        Button btnCreateProduct = (Button) findViewById(R.id.btnCreateProduct);
+        Button btnCreateItem = (Button) findViewById(R.id.btnCreateProduct);
  
         // button click event
-        btnCreateProduct.setOnClickListener(new View.OnClickListener() {
+        btnCreateItem.setOnClickListener(new View.OnClickListener() {
  
             @Override
             public void onClick(View view) {
                 // creating new product in background thread
-                new CreateNewProduct().execute();
+                new CreateNewItem().execute();
             }
         });
     }
@@ -68,7 +68,7 @@ public class NewItemActivity extends Activity {
     /**
      * Background Async Task to Create new product
      * */
-    class CreateNewProduct extends AsyncTask<String, String, String> {
+    class CreateNewItem extends AsyncTask<String, String, String> {
  
         /**
          * Before starting background thread Show Progress Dialog
@@ -87,6 +87,7 @@ public class NewItemActivity extends Activity {
          * Creating product
          * */
         protected String doInBackground(String... args) {
+        	// get all the values entered for the item
             String name = inputName.getText().toString();
             String cost = inputPrice.getText().toString();
             String description = inputDesc.getText().toString();

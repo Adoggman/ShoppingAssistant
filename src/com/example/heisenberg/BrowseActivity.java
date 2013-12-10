@@ -33,10 +33,9 @@ public class BrowseActivity extends ListActivity {
  
     ArrayList<HashMap<String, String>> itemsList;
  
-    // url to get all products list
-    private static String url_all_products = Constants.url+"get_all_items.php";
+    // url to get all items list
+    private static String url_all_items = Constants.url+"get_all_items.php";
     
- 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_ITEMS = "items";
@@ -44,7 +43,7 @@ public class BrowseActivity extends ListActivity {
     private static final String TAG_NAME = "name";
  
     // products JSONArray
-    JSONArray products = null;
+    JSONArray items = null;
  
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,19 +58,16 @@ public class BrowseActivity extends ListActivity {
         // Get listview
         ListView lv = getListView();
  
-        // on seleting single product
-        // launching Edit Product Screen
+        // launching compare item Screen or Details screen
         lv.setOnItemClickListener(new OnItemClickListener() {
  
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                    int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // getting values from selected ListItem
                 String itemId = ((TextView) view.findViewById(R.id.id)).getText().toString();
  
                 Intent in;
-
-                
+   
                 // See if there is an item to compare to
                 String compareID = getIntent().getStringExtra("compareID");
                 if (compareID != null) {
@@ -80,23 +76,21 @@ public class BrowseActivity extends ListActivity {
                 } else {
                 	in = new Intent(getApplicationContext(), DetailsActivity.class);
                 }
-                // sending pid to next activity
+                // sending id to next activity
                 in.putExtra(TAG_ID, itemId);
  
-             // starting new activity and expecting some response back
+                // starting new activity and expecting some response back
                 startActivityForResult(in, 100);
             }
         });
         
+        // if admin, display add new item button
         if (!User.loggedIn(this) || !User.getLoggedInUser(this).isAdmin()) {
         	((Button)findViewById(R.id.btnAdd)).setVisibility(View.GONE);
-        } else {
-        	((Button)findViewById(R.id.btnAdd)).setVisibility(View.VISIBLE);
         }
- 
     }
  
-    // Response from Edit Product Activity
+    // Response from Edit Item Activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -112,19 +106,19 @@ public class BrowseActivity extends ListActivity {
  
     }
     
+    // Launch add new item view
     public void addItem(View v){
     	Intent i = new Intent(getApplicationContext(), NewItemActivity.class);
     	startActivity(i);
     }
  
     /**
-     * Background Async Task to Load all product by making HTTP Request
+     * Background Async Task to Load all items by making HTTP Request
      * */
     class LoadAllProducts extends AsyncTask<String, String, String> {
  
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
+        
+        // Before starting background thread Show Progress Dialog
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -135,17 +129,15 @@ public class BrowseActivity extends ListActivity {
             pDialog.show();
         }
  
-        /**
-         * getting All products from url
-         * */
+        // getting All products from url
         protected String doInBackground(String... args) {
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             // getting JSON string from URL
-            JSONObject json = jParser.makeHttpRequest(url_all_products, "GET", params);
+            JSONObject json = jParser.makeHttpRequest(url_all_items, "GET", params);
  
             // Check your log cat for JSON reponse
-            Log.d("All Products: ", json.toString());
+            Log.d("All Items: ", json.toString());
  
             try {
                 // Checking for SUCCESS TAG
@@ -154,11 +146,11 @@ public class BrowseActivity extends ListActivity {
                 if (success == 1) {
                     // products found
                     // Getting Array of Products
-                    products = json.getJSONArray(TAG_ITEMS);
+                    items = json.getJSONArray(TAG_ITEMS);
  
                     // looping through All Products
-                    for (int i = 0; i < products.length(); i++) {
-                        JSONObject c = products.getJSONObject(i);
+                    for (int i = 0; i < items.length(); i++) {
+                        JSONObject c = items.getJSONObject(i);
  
                         // Storing each json item in variable
                         String id = c.getString(TAG_ID);
@@ -176,12 +168,6 @@ public class BrowseActivity extends ListActivity {
                     }
                 } else {
                     // no products found
-                    // Launch Add New product Activity
-//                    Intent i = new Intent(getApplicationContext(),
-//                            NewProductActivity.class);
-//                    // Closing all previous activities
-//                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    startActivity(i);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -199,13 +185,10 @@ public class BrowseActivity extends ListActivity {
             // updating UI from Background Thread
             runOnUiThread(new Runnable() {
                 public void run() {
-                    /**
-                     * Updating parsed JSON data into ListView
-                     * */
+                    // Updating parsed JSON data into ListView
                     ListAdapter adapter = new SimpleAdapter(
                             BrowseActivity.this, itemsList,
-                            R.layout.view_item_entry, new String[] { TAG_ID,
-                                    TAG_NAME},
+                            R.layout.view_item_entry, new String[] { TAG_ID, TAG_NAME},
                             new int[] { R.id.id, R.id.name });
                     // updating listview
                     setListAdapter(adapter);

@@ -23,6 +23,7 @@ android:background="#000000"
 android:orientation="vertical"
 android:padding="10dp" >
 	
+    <!-- Name Label -->
 	<TextView
 	    android:id="@+id/itemName"
 	    android:layout_width="fill_parent"
@@ -39,6 +40,7 @@ android:padding="10dp" >
 
 	</TextView>
 	
+	<!-- Description Label -->
 	<TextView
 		android:id="@+id/itemDescription"
 		android:layout_width="match_parent"
@@ -54,6 +56,7 @@ android:padding="10dp" >
         android:textStyle="italic" >
 	</TextView>
 	
+	<!-- Cost Label -->
 	<TextView
 		android:id="@+id/itemCost"
 		android:layout_width="match_parent"
@@ -69,6 +72,7 @@ android:padding="10dp" >
         android:textStyle="bold" >
 	</TextView>
 	
+	<!-- Location Label -->
 	<TextView
 		android:id="@+id/txtLocation"
 		android:text="Store Location"
@@ -85,6 +89,7 @@ android:padding="10dp" >
         android:textStyle="bold" >
 	</TextView>
 	
+	<!-- Location Input -->
 	<TextView
 		android:id="@+id/itemLocation"
 		android:layout_width="match_parent"
@@ -100,6 +105,7 @@ android:padding="10dp" >
         android:textStyle="italic" >
 	</TextView>
 	
+	<!-- Discount Label -->
 	<TextView
 		android:id="@+id/txtDiscount"
 		android:text="Discount"
@@ -116,6 +122,7 @@ android:padding="10dp" >
         android:textStyle="bold" >
 	</TextView>
 	
+	<!-- Discount input -->
 	<TextView
 		android:id="@+id/itemDiscount"
 		android:layout_width="match_parent"
@@ -138,6 +145,7 @@ android:padding="10dp" >
 	    android:layout_alignParentLeft="true"
 	    android:layout_alignParentRight="true"
 	    android:layout_below="@+id/itemDiscount"
+	    android:layout_marginTop="25dp"
 	    android:background="#454545"
 	    android:onClick="compare"
 	    android:text="Compare"

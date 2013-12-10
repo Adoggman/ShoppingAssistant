@@ -45,6 +45,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         
+        // if the user is logged in, open the main
         if (User.loggedIn(this)) {
         	User.getLoggedInUser(this).logOut(this);
             Intent i = new Intent(getApplicationContext(), HeisenbergMain.class);
@@ -94,7 +95,7 @@ public class LoginActivity extends Activity {
         }
  
         /**
-         * getting All products from url
+         * getting All items from url
          * */
         protected String doInBackground(String... args) {
             String email = inputEmail.getText().toString();
@@ -122,8 +123,6 @@ public class LoginActivity extends Activity {
                 	email = jsonItem.getString(TAG_EMAIL);
                 	String name = jsonItem.getString(TAG_NAME);
                 	boolean admin = jsonItem.getString(TAG_ADMIN).equals("1");
-                	
-                	
                 	
                 	// LOG IN CODE
                 	SharedPreferences settings = getSharedPreferences(User.PREFS_NAME,0);

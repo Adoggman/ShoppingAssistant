@@ -40,13 +40,13 @@ public class EditItemActivity extends Activity {
     // JSON parser class
     JSONParser jsonParser = new JSONParser();
  
-    // single product url
+    // single item url
     private static final String url_item_details = Constants.url+"get_item_details.php";
  
-    // url to update product
+    // url to update item
     private static final String url_update_item = Constants.url+"update_item.php";
  
-    // url to delete product
+    // url to delete item
     private static final String url_delete_item = Constants.url+"delete_item.php";
  
     // JSON Node names
@@ -70,14 +70,14 @@ public class EditItemActivity extends Activity {
         btnSave = (Button) findViewById(R.id.btnSave);
         btnDelete = (Button) findViewById(R.id.btnDelete);
  
-        // getting product details from intent
+        // getting item details from intent
         Intent i = getIntent();
  
-        // getting product id (id) from intent
+        // getting item id (id) from intent
         id = i.getStringExtra(TAG_ID);
  
-        // Getting complete product details in background thread
-        new GetProductDetails().execute();
+        // Getting complete item details in background thread
+        new GetItemDetails().execute();
  
         // save button click event
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +85,7 @@ public class EditItemActivity extends Activity {
             @Override
             public void onClick(View arg0) {
                 // starting background task to update product
-                new SaveProductDetails().execute();
+                new SaveItemDetails().execute();
             }
         });
  
@@ -95,16 +95,16 @@ public class EditItemActivity extends Activity {
             @Override
             public void onClick(View arg0) {
                 // deleting product in background thread
-                new DeleteProduct().execute();
+                new DeleteItem().execute();
             }
         });
  
     }
  
     /**
-     * Background Async Task to Get complete product details
+     * Background Async Task to Get complete item details
      * */
-    class GetProductDetails extends AsyncTask<String, String, String> {
+    class GetItemDetails extends AsyncTask<String, String, String> {
  
         /**
          * Before starting background thread Show Progress Dialog
@@ -120,7 +120,7 @@ public class EditItemActivity extends Activity {
         }
  
         /**
-         * Getting product details in background thread
+         * Getting item details in background thread
          * */
         protected String doInBackground(String... args) {
  
@@ -131,8 +131,7 @@ public class EditItemActivity extends Activity {
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair(TAG_ID, id));
  
-                        // getting product details by making HTTP request
-                // Note that product details url will use GET request
+                // getting product details by making HTTP request
                 JSONObject json = jsonParser.makeHttpRequest(url_item_details, "GET", params);
  
                         // check your log for json response
@@ -194,7 +193,7 @@ public class EditItemActivity extends Activity {
     /**
      * Background Async Task to  Save product Details
      * */
-    class SaveProductDetails extends AsyncTask<String, String, String> {
+    class SaveItemDetails extends AsyncTask<String, String, String> {
  
         /**
          * Before starting background thread Show Progress Dialog
@@ -269,9 +268,9 @@ public class EditItemActivity extends Activity {
     }
  
     /*****************************************************************
-     * Background Async Task to Delete Product
+     * Background Async Task to Delete Item
      * */
-    class DeleteProduct extends AsyncTask<String, String, String> {
+    class DeleteItem extends AsyncTask<String, String, String> {
  
         /**
          * Before starting background thread Show Progress Dialog
@@ -303,7 +302,7 @@ public class EditItemActivity extends Activity {
                         url_delete_item, "POST", params);
  
                 // check your log for json response
-                Log.d("Delete Product", json.toString());
+                Log.d("Delete Item", json.toString());
  
                 // json success tag
                 success = json.getInt(TAG_SUCCESS);

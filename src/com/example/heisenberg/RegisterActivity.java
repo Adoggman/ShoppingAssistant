@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -69,7 +70,7 @@ public class RegisterActivity extends Activity{
 	
 	
 	/**
-	 * Backgroudn Async Task to Register User
+	 * Background Async Task to Register User
 	 */
 	class RegisterUser extends AsyncTask<String, String, String> {
         /**
@@ -89,6 +90,7 @@ public class RegisterActivity extends Activity{
          * Creating product
          * */
         protected String doInBackground(String... args) {
+        	// get values entered by user during registration
             String name = inputName.getText().toString();
             String email = inputEmail.getText().toString();
             String password = inputPassword.getText().toString();
@@ -98,7 +100,7 @@ public class RegisterActivity extends Activity{
             params.add(new BasicNameValuePair("email", email));
             params.add(new BasicNameValuePair("password", password));
             params.add(new BasicNameValuePair("name", name));
- 
+        	
             // getting JSON Object
             // Note that create product url accepts POST method
             JSONObject json = jsonParser.makeHttpRequest(url_register_user,
