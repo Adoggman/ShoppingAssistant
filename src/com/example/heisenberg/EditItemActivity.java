@@ -312,7 +312,7 @@ public class EditItemActivity extends Activity {
                     Intent i = getIntent();
                     // send result code 100 to notify about product deletion
                     setResult(100, i);
-                    finish();
+                    // finish();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -327,7 +327,9 @@ public class EditItemActivity extends Activity {
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once product deleted
             pDialog.dismiss();
-            Intent i = new Intent(getApplicationContext(), BrowseActivity.class);
+            Intent i = new Intent(getApplicationContext(), HeisenbergMain.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
         	startActivity(i);
         }
  

@@ -123,7 +123,7 @@ public class NewItemActivity extends Activity {
                     startActivity(i);
  
                     // closing this screen
-                    finish();
+                    // finish();
                 } else {
                     // failed to create product
                 }
@@ -140,6 +140,10 @@ public class NewItemActivity extends Activity {
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once done
             pDialog.dismiss();
+            Intent i = new Intent(getApplicationContext(), BrowseActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
+        	startActivity(i);
         }
  
     }
