@@ -82,5 +82,16 @@
         android:background="#fff"
         android:ems="10"
         android:textColor="#000" />
+    
+    <TextView android:id="@+id/link_to_help"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dip"
+                android:layout_marginBottom="40dip"
+                android:layout_alignParentBottom="true"
+                android:text="Need Help?"
+                android:gravity="center"
+                android:textSize="19dip"
+                android:textColor="#003300"/>
 
 </RelativeLayout>

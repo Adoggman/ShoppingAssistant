@@ -2,12 +2,13 @@ package com.example.heisenberg;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -26,6 +27,20 @@ public class HeisenbergMain extends Activity {
         } else {
         	btnLogin.setText((CharSequence)"Login");
         }
+        
+        TextView registerScreen = (TextView)findViewById(R.id.link_to_help);
+        
+        // Listening to help link
+        registerScreen.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//Switch to help page
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://goo.gl/LuEbNK"));
+			    startActivity(intent);
+				
+			}
+		});
     }
 
     @Override
