@@ -210,7 +210,8 @@ public class DetailsActivity extends Activity {
         }
     }
     
-    private Date getDate(String date)
+    @SuppressWarnings("deprecation")
+	private Date getDate(String date)
     {
     	String[] fullDate = date.split("-");
     	// Date attribute year is year + 1900
