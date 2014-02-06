@@ -15,9 +15,10 @@ require_once __DIR__ . '/db_connect.php';
 $db = new DB_CONNECT();
  
 // check for post data
-if (isset($_GET["email"]) && isset($_GET["password"])) {
-    $email = $_GET['email'];
-	$password = $_GET['password'];
+if (count($_POST) === 2 && isset($_GET["email"]) && isset($_GET["password"])) {
+
+    array_map('mysql_real_escape_string', $_POST);
+    extract($_POST);
  
     // get a item from items table
     $result = mysql_query("SELECT * FROM users WHERE email = '$email' AND password='$password'");

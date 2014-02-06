@@ -16,7 +16,7 @@ $db = new DB_CONNECT();
  
 // check for post data
 if (isset($_GET["query"])) {
-    $query= $_GET['query'];
+    $query= mysql_real_escape_string($_GET['query']);
  
     // get a item from items table
     $result = mysql_query("SELECT *FROM items WHERE name like '%$query%'");

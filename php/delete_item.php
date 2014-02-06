@@ -10,7 +10,7 @@ $response = array();
  
 // check for required fields
 if (isset($_POST['id'])) {
-    $id = $_POST['id'];
+    $id = mysql_real_escape_string($_POST['id']);
  
     // include db connect class
     require_once __DIR__ . '/db_connect.php';
