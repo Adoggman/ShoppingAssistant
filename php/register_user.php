@@ -9,11 +9,10 @@
 $response = array();
  
 // check for required fields
-if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['name'])) {
+if (count($_POST) === 3 && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['name'])) {
  
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $name = $_POST['name'];
+    array_map('mysql_real_escape_string', $_POST);
+    extract($_POST);
  
     // include db connect class
     require_once __DIR__ . '/db_connect.php';

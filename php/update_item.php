@@ -9,16 +9,10 @@
 $response = array();
  
 // check for required fields
-if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['cost']) && isset($_POST['description']) && isset($_POST['location']) && isset($_POST['discount']) && isset($_POST['startdate']) && isset($_POST['enddate'])) {
+if (count($_POST) === 8 && isset($_POST['id']) && isset($_POST['name']) && isset($_POST['cost']) && isset($_POST['description']) && isset($_POST['location']) && isset($_POST['discount']) && isset($_POST['startdate']) && isset($_POST['enddate'])) {
  
-    $id = $_POST['id'];
-	$name = $_POST['name'];
-    $description = $_POST['description'];
-    $cost = $_POST['cost'];
-	$location = $_POST['location'];
-	$discount = $_POST['discount'];
-	$startdate = $_POST['startdate'];
-	$enddate = $_POST['enddate'];
+    array_map('mysql_real_escape_string', $_POST);
+    extract($_POST);
  
     // include db connect class
     require_once __DIR__ . '/db_connect.php';

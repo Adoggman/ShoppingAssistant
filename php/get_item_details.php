@@ -16,10 +16,10 @@ $db = new DB_CONNECT();
  
 // check for post data
 if (isset($_GET["id"])) {
-    $id = $_GET['id'];
+    $id = mysql_real_escape_string($_GET['id']);
  
     // get a item from items table
-    $result = mysql_query("SELECT *FROM items WHERE id = $id");
+    $result = mysql_query("SELECT * FROM items WHERE id = $id");
  
     if (!empty($result)) {
         // check for empty result
